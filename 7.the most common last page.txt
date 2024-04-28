@@ -1,0 +1,20 @@
+The query identifies the most common last page visited before making a purchase for the first time?
+
+SELECT 
+    LastPagePath, 
+    COUNT(*) AS Count 
+FROM 
+    (SELECT 
+        UserID, 
+        EventName, 
+        LAG(PagePath) OVER (PARTITION BY UserID ORDER BY EventTimestamp) AS LastPagePath 
+     FROM 
+        UserEvents 
+     WHERE 
+        EventName = 'purchase'
+    ) 
+GROUP BY 
+    LastPagePath 
+ORDER BY 
+    Count DESC 
+LIMIT 1;

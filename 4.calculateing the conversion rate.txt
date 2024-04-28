@@ -1,0 +1,8 @@
+calculateing the conversion rate by counting the distinct number of users who made a purchase above $500 
+
+SELECT 
+    COUNT(DISTINCT UserID) / (SELECT COUNT(DISTINCT UserID) FROM UserEvents WHERE EventName = 'purchase') AS ConversionRate 
+FROM 
+    UserEvents 
+WHERE 
+    TransactionAmount > 500;

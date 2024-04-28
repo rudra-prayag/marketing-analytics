@@ -1,0 +1,14 @@
+To identify the third last event in the UserEvents table for each user
+SELECT 
+    UserID, 
+    EventName 
+FROM 
+    (SELECT 
+        UserID, 
+        EventName, 
+        ROW_NUMBER() OVER (PARTITION BY UserID ORDER BY EventTimestamp DESC) AS rn 
+     FROM 
+        UserEvents
+    ) 
+WHERE 
+    rn = 3;

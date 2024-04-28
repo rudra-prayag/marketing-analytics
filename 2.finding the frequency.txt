@@ -1,0 +1,21 @@
+finding the frequency of the immediately preceding event before a user clicks 'add_to_cart' for the first time
+
+SELECT 
+    EventName, 
+    COUNT(*) AS Frequency 
+FROM 
+    (SELECT 
+        UserID, 
+        EventName, 
+        LAG(EventName) OVER (PARTITION BY UserID ORDER BY EventTimestamp) AS PrevEvent 
+     FROM 
+        UserEvents 
+     WHERE 
+        EventName = 'add_to_cart'
+    ) 
+WHERE 
+    PrevEvent IS NOT NULL 
+GROUP BY 
+    EventName 
+ORDER BY 
+    Frequency DESC;

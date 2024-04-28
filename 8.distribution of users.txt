@@ -1,0 +1,18 @@
+for giving a distribution of users based on the number of distinct pageviews 
+
+SELECT 
+    NumberOfPageViews, 
+    COUNT(UserID) AS NumberOfUsers 
+FROM 
+    (SELECT 
+        UserID, 
+        COUNT(DISTINCT PagePath) AS NumberOfPageViews 
+     FROM 
+        UserEvents 
+     WHERE 
+        EventName = 'page_view' 
+     GROUP BY 
+        UserID
+    ) 
+GROUP BY 
+    NumberOfPageViews;

@@ -1,0 +1,13 @@
+time difference in minutes between when a user begins the checkout for the first time and completes the purchase for the first time
+
+SELECT 
+    UserID, 
+    TIMESTAMP_DIFF(
+        MIN(CASE WHEN EventName = 'purchase' THEN EventTimestamp END), 
+        MIN(CASE WHEN EventName = 'begin_checkout' THEN EventTimestamp END), 
+        MINUTE
+    ) 
+FROM 
+    UserEvents 
+GROUP BY 
+    UserID;

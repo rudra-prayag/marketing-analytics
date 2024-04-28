@@ -1,0 +1,12 @@
+for calculating the exit rate for each page
+
+
+SELECT 
+    PagePath, 
+    COUNT(DISTINCT UserID) / (SELECT COUNT(DISTINCT UserID) FROM UserEvents WHERE EventName = 'page_view') AS ExitRate 
+FROM 
+    UserEvents 
+WHERE 
+    EventName = 'exit' 
+GROUP BY 
+    PagePath;

@@ -1,0 +1,12 @@
+counts the number of users who made more than one purchase
+
+SELECT 
+    COUNT(DISTINCT UserID) 
+FROM 
+    UserEvents 
+WHERE 
+    EventName = 'purchase' 
+GROUP BY 
+    UserID 
+HAVING 
+    COUNT(*) > 1;
